@@ -4,6 +4,7 @@ DECLARE SUB HandleCompileSource ()
 CONST buffersize& = 16384
 DIM SHARED buffer AS STRING * 16384
 
+' Print the buffer address for the host
 segment& = VARSEG(buffer)
 IF segment& < 0 THEN segment& = 1 - segment&
 pointer& = VARPTR(buffer)
@@ -24,6 +25,7 @@ DO WHILE 1
 LOOP
 
 SUB HandleCompileSource
+    compiler$ = ReadLine$
     path$ = ReadLine$
     sourcesize& = VAL(ReadLine$)
     remaining& = sourcesize&
@@ -53,12 +55,25 @@ SUB HandleCompileSource
     PRINT "received"
     CLOSE #1
 
+    SELECT CASE compiler$
+        CASE "QB40"
+            qbpath$ = "C:\QB40\BC.EXE /A /O"
+        CASE "QB45"
+            qbpath$ = "C:\QB45\BC.EXE /A /O"
+        CASE "PDS71"
+            qbpath$ = "C:\PDS71\BC.EXE /A /O"
+        CASE "VBD10"
+            qbpath$ = "C:\VBD10\BC.EXE /A /O"
+        CASE ELSE
+            PRINT "(size 0) done"
+    END SELECT
+
     ' compile source
     objpath$ = path$
     MID$(objpath$, LEN(objpath$) - 2, 3) = "OBJ"
     lstpath$ = path$
     MID$(lstpath$, LEN(lstpath$) - 2, 3) = "LST"
-    SHELL "C:\\QB45\\BC.EXE /A /O " + path$ + " " + objpath$ + " " + lstpath$ + ">NUL"
+    SHELL qbpath$ + " " + path$ + " " + objpath$ + " " + lstpath$ + ">NUL"
 
     ' output listfile
     OPEN lstpath$ FOR BINARY ACCESS READ AS #1
