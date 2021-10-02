@@ -57,13 +57,13 @@ SUB HandleCompileSource
 
     SELECT CASE compiler$
         CASE "QB40"
-            qbpath$ = "C:\QB40\BC.EXE /A /O"
+            qbpath$ = "A:\QB40\BC.EXE /A /O"
         CASE "QB45"
-            qbpath$ = "C:\QB45\BC.EXE /A /O"
+            qbpath$ = "A:\QB45\BC.EXE /A /O"
         CASE "PDS71"
-            qbpath$ = "C:\PDS71\BC.EXE /A /O"
+            qbpath$ = "A:\PDS71\BC.EXE /A /O"
         CASE "VBD10"
-            qbpath$ = "C:\VBD10\BC.EXE /A /O"
+            qbpath$ = "A:\VBD10\BC.EXE /A /O"
         CASE ELSE
             PRINT "(size 0) done"
     END SELECT
